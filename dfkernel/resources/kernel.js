@@ -39,6 +39,10 @@ define(["jquery",
 
         Jupyter._dfkernel_loaded = false;
 
+        var currentdate = new Date();
+
+
+
         var onload = function() {
             // reload the notebook after patching code
             var nb = Jupyter.notebook;
@@ -95,6 +99,48 @@ define(["jquery",
                 var stylesheet = $('<link rel="stylesheet" type="text/css">');
                 stylesheet.attr('href',require.toUrl("./df-notebook/css/icon.css"));
                 $('head').append(stylesheet);
+            var element_changes = [];
+
+            var mouse_events = [];
+
+            var hide_toolbar = false;
+            var hide_graph_button = false;
+            var hide_statuses = false;
+
+            var design = Jupyter.notebook.metadata.design || false;
+
+            if (design == 'graph') {
+                Jupyter.dfgraph.depview.toggle_dep_view();
+                hide_toolbar = true;
+                hide_statuses = true;
+            }
+            else if (design == 'state') {
+                hide_toolbar = true;
+                hide_graph_button = true;
+            }
+            else if (design == 'toolbar') {
+                Jupyter.CellToolbar.activate_preset('Dataflow');
+                Jupyter.CellToolbar.global_show();
+                hide_graph_button = true;
+                hide_statuses = true;
+            }
+
+
+            if (hide_toolbar) {
+                Jupyter.CellToolbar.global_hide();
+                $('#menu-cell-toolbar ul li').each(function () { var ele = $(this); if (ele.attr('data-name') == 'Dataflow') { ele.hide(); }; })
+            };
+
+            if (hide_graph_button) {
+                $('span').each(function () { var ele = $(this); if (ele.text() == 'Dependency Viewer') { ele.parent().hide(); } })
+            };
+
+            if (hide_statuses) {
+                var style_rules = [];
+                style_rules.push("div.icon_status { display:none !important } ");
+                var style = '<style type="text/css">' + style_rules.join("\n") + "</style>";
+                $("head").append(style);
+            }
 
         };
         return {onload:onload};
