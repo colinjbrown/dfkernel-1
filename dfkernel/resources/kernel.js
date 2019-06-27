@@ -94,8 +94,16 @@ define(["jquery",
                        'callback': function () {
                                                      nb.session.dfgraph.depview.toggle_dep_view();
                        }
-
-               }]);
+               },
+            {
+                        'label' : 'Full Screen Dep Viewer',
+                        'icon' : 'fa-bar-chart',
+                        'callback': function () {
+                            $('#svg-div svg').css('position','fixed').css('top',0).css('left',0).css('height','100%').css('width','100%');
+                            $('html, body').css('margin',0).css('padding',0).css('overflow','hidden');
+                        }
+            }
+            ]);
                 var stylesheet = $('<link rel="stylesheet" type="text/css">');
                 stylesheet.attr('href',require.toUrl("./df-notebook/css/icon.css"));
                 $('head').append(stylesheet);
