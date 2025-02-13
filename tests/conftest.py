@@ -207,3 +207,4 @@ async def ipkernel(anyio_backend):
         yield kernel
         kernel.destroy()
         ZMQInteractiveShell.clear_instance()
+

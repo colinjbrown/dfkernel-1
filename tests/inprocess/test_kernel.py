@@ -11,8 +11,8 @@ from IPython.utils.io import capture_output  # type:ignore[attr-defined]
 from jupyter_client.session import Session
 
 from ipykernel.inprocess.blocking import BlockingInProcessKernelClient
-from ipykernel.inprocess.ipkernel import InProcessKernel
-from ipykernel.inprocess.manager import InProcessKernelManager
+from dfkernel.inprocess.ipkernel import InProcessKernel
+from dfkernel.inprocess.manager import InProcessKernelManager
 
 from ..utils import assemble_output
 
