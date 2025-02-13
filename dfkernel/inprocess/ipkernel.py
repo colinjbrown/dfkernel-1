@@ -10,8 +10,8 @@ class InProcessKernel(IPythonKernel,InProcessKernel):
 
     frontends = List(Instance("dfkernel.inprocess.client.InProcessKernelClient", allow_none=True))
 
-    def __init__(self, **traits):
-        super().__init__(**traits)
+    # def __init__(self, **traits):
+    #     super().__init__(**traits)
         #self._io_dispatch()
         #if self.shell:
         #    self.shell.kernel = self
@@ -20,7 +20,7 @@ class InProcessKernel(IPythonKernel,InProcessKernel):
         """Override registration of dispatchers for streams."""
         if self.shell:
             self.shell.exit_now = False
-        await super().start(task_status=task_status)
+        await IPythonKernel.start(self,task_status=task_status)
     
     @default("stdout")
     def _default_stdout(self):
